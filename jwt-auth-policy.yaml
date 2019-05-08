@@ -1,0 +1,12 @@
+apiVersion: "authentication.istio.io/v1alpha1"
+kind: "Policy"
+metadata:
+  name: "jwt-example"
+spec:
+  targets:
+  - name: httpbin
+  origins:
+  - jwt:
+      issuer: "https://wso2is:9443/oauth2/token"
+      jwksUri: "http://wso2is-service.default.svc.cluster.local:9763/oauth2/jwks"
+  principalBinding: USE_ORIGIN
