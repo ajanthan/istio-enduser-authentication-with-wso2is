@@ -1,5 +1,5 @@
 # istio-enduser-authentication-with-wso2is
-A guide on how to authenticate endusers in Istio using WSO2 Identity Server
+A guide on how to authenticate endusers in Istio using WSO2 Identity Server.
 
 ### Prerequists
 1. [Kubernetes](https://kubernetes.io/docs/setup/)
@@ -40,6 +40,7 @@ spec:
   - jwt:
       issuer: "https://wso2is:9443/oauth2/token"
       jwksUri: "http://wso2is-service.default.svc.cluster.local:9763/oauth2/jwks"
+  principalBinding: USE_ORIGIN
 ```
 To apply the policy issue following command.
 
@@ -51,7 +52,7 @@ kubectl apply -f jwt-auth-policy.yaml
 
 Register a service provider with `OAuth/OpenID Connect Configuration` inbound authentication type and obtain `OAuth Client Key` and `OAuth Client Secret`.
 
-In the next step the ID token is going to be generated using OAuth2 endpoint using `Client Credential` grant type.
+In the next step the ID token is going to be generated using OAuth2 endpoint using `Password` grant type.
 
 ```text
 curl -vk -d "grant_type=password&username=admin&password=admin&scope=openid" -H "Authorization: Basic base64encode(OAuth Client Key:OAuth Client Secret)" -H "Content-Type: application/x-www-form-urlencoded" https://wso2is/oauth2/token
